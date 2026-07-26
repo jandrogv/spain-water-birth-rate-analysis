@@ -6,4 +6,4 @@ The source tables are attributed in the original thesis to the Spanish National 
 
 ## Reproducibility note
 
-The preparation script expects `Poblacion_Comunidad.xls` in this directory, but that input is not present in the committed repository. Stage 1 cannot be rendered until the owner supplies or formally resolves that dependency. No substitute has been inferred or created.
+The preparation script expects `Poblacion_Comunidad.xls` in this directory. That input is present in the committed repository and is available for the Stage 1 workflow.
