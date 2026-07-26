@@ -126,6 +126,10 @@ The committed extracts are derived from public statistical material attributed i
 
 The Power BI file is included as a portfolio artefact. Its refresh source paths require an owner check in Power BI Desktop; see [the refresh guide](docs/power-bi-source-update.md).
 
-## License
+## Licence
 
-No repository license file is currently committed. Any future license should apply only to repository material for which the author can grant rights; it cannot replace the terms governing third-party public data sources or the Power BI platform.
+The original R code and code-related documentation in this repository are available under the [MIT License](LICENSE).
+
+See [LICENSING.md](LICENSING.md) for the complete scope and exclusions.
+
+The original datasets, processed data derived from third-party sources, Bachelor thesis PDF, Power BI files, dashboard screenshots, institutional branding and other third-party materials are not covered by the MIT License. They remain subject to the rights and terms established by their respective owners and providers.
