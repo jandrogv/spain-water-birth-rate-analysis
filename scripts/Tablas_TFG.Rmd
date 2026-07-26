@@ -1,0 +1,283 @@
+---
+title: "Tablas"
+author: "Alejandro Gil Villar"
+date: "2023-10-14"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Librerias
+
+```{r, message=FALSE,warning=FALSE}
+library(readxl)
+library(tidyr)
+library(dplyr)
+library(xlsx)
+library(openxlsx)
+library(ggplot2)
+library(scales)
+library(knitr)
+library(kableExtra)
+library(officer)
+library(flextable)
+```
+
+```{r}
+Poblacion_Provincias <- read_excel("Poblacion_Provincias.xlsx")
+
+Agua_España <- read_excel("Agua_España.xlsx")
+
+Tabla_Final <- read_excel("Tabla_Final.xlsx")
+
+Poblacion_Comunidades <- read_excel("Poblacion_Comunidades.xlsx")
+```
+
+# Tablas de Poblacion y Recursos Hidricos
+
+## Preparacion de la Poblacion
+
+```{r}
+Poblacion_Comunidades_2020 = Poblacion_Comunidades %>% filter(Año == 2020)
+```
+
+## Preparacion de los Recursos Hidricos
+
+```{r}
+Agua_España_2020 = Agua_España %>% filter(Año == 2020)
+```
+
+## Tabla sobre la Poblacion
+
+```{r}
+ft_1 = Poblacion_Comunidades_2020 %>% 
+  select(Comunidad,Poblacion_Comunidad,Variacion_Comunidad,Variacion_Poblacion_2,Variacion_Poblacion_4,Variacion_Poblacion_10) %>%
+  rename(Poblacion = Poblacion_Comunidad,Variacion_1=Variacion_Comunidad, Variacion_2 = Variacion_Poblacion_2,Variacion_4 = Variacion_Poblacion_4,Variacion_10 = Variacion_Poblacion_10) %>% 
+  flextable() %>% 
+  set_table_properties(width = 0.8)
+
+ft_1
+```
+
+## Tabla sobre la Natalaidad
+
+```{r}
+ft_2 = Poblacion_Comunidades_2020 %>% 
+  select(Comunidad,Natalidad_Comunidad,Variacion_Natalidad_2,Variacion_Natalidad_4,Variacion_Natalidad_10) %>%
+  rename(Natalidad=Natalidad_Comunidad, Variacion_2 = Variacion_Natalidad_2,Variacion_4 = Variacion_Natalidad_4,Variacion_10 = Variacion_Natalidad_10) %>% 
+  flextable() %>% 
+  set_table_properties(width = 0.8)
+
+ft_2
+```
+
+## Tabla sobre la Mortalidad
+
+```{r}
+ft_3 = Poblacion_Comunidades_2020 %>% 
+  select(Comunidad,Mortalidad_Comunidad,Variacion_Mortalidad_2,Variacion_Mortalidad_4,Variacion_Mortalidad_10) %>%
+  rename(Mortalidad=Mortalidad_Comunidad, Variacion_2 = Variacion_Mortalidad_2,Variacion_4 = Variacion_Mortalidad_4,Variacion_10 = Variacion_Mortalidad_10) %>% 
+  flextable() %>% 
+  set_table_properties(width = 0.8)
+
+ft_3
+```
+
+## Tabla sobre la Migracion
+
+```{r}
+ft_4 = Poblacion_Comunidades_2020 %>% 
+  select(Comunidad,Migracion_Comunidad,Variacion_Migracion_2,Variacion_Migracion_4,Variacion_Migracion_10) %>%
+  rename(Migracion=Migracion_Comunidad, Variacion_2 = Variacion_Migracion_2,Variacion_4 = Variacion_Migracion_4,Variacion_10 = Variacion_Migracion_10) %>% 
+  flextable() %>% 
+  set_table_properties(width = 0.8)
+
+ft_4
+```
+
+## Tabla sobre el Suministro de Agua
+
+```{r}
+ft_5 = Agua_España_2020 %>% 
+  select(Comunidad,`Volumen de agua suministrada`,Agua_Km2,Variacion_Suministro_2,Variacion_Suministro_4,Variacion_Suministro_10) %>%
+  rename(Volumen_Agua_Km2=Agua_Km2, Variacion_2 = Variacion_Suministro_2,Variacion_4 = Variacion_Suministro_4,Variacion_10 = Variacion_Suministro_10) %>% 
+  flextable() %>% 
+  set_table_properties(width = 0.8)
+
+ft_5
+```
+
+## Tabla sobre el Suministro real de Agua
+
+```{r}
+ft_6 = Agua_España_2020 %>% 
+  select(Comunidad,`Volumen de agua registrada y distribuida`,Variacion_Suministro_real_2,Variacion_Suministro_real_4,Variacion_Suministro_real_10) %>%
+  rename( `Suministro Real`=`Volumen de agua registrada y distribuida`,Variacion_2 = Variacion_Suministro_real_2,Variacion_4 = Variacion_Suministro_real_4,Variacion_10 = Variacion_Suministro_real_10) %>% 
+  flextable() %>% 
+  set_table_properties(width = 0.8)
+
+ft_6
+``` 
+
+## Tabla sobre el suministro de Agua en los Hogares
+
+```{r}
+ft_7 = Agua_España_2020 %>% 
+  select(Comunidad,Hogares,Variacion_Hogares_2,Variacion_Hogares_4,Variacion_Hogares_10) %>%
+  rename( Variacion_2 = Variacion_Hogares_2,Variacion_4 = Variacion_Hogares_4,Variacion_10 = Variacion_Hogares_10) %>% 
+  flextable() %>% 
+  set_table_properties(width = 0.8)
+
+ft_7
+``` 
+
+## Tabla sobre Agua Potable disponible
+
+```{r}
+ft_8 = Agua_España_2020 %>% 
+  select(Comunidad,Disponible_para_Potabilizacion,Variacion_Agua_Potable_2,Variacion_Agua_Potable_4,Variacion_Agua_Potable_10) %>%
+  rename( `Agua Potable` = Disponible_para_Potabilizacion,Variacion_2 = Variacion_Agua_Potable_2,Variacion_4 = Variacion_Agua_Potable_4,Variacion_10 = Variacion_Agua_Potable_10) %>% 
+  flextable() %>% 
+  set_table_properties(width = 0.8)
+
+ft_8
+```
+
+## Tabla sobre Agua no Potable disponible
+
+```{r}
+ft_9 = Agua_España_2020 %>% 
+  select(Comunidad,Disponible_no_Potabilizada,Var_Agua_No_Pot_2,Var_Agua_No_Pot_4,Var_Agua_No_Pot_10) %>%
+  rename( `Agua No Potable`=Disponible_no_Potabilizada,Variacion_2 = Var_Agua_No_Pot_2,Variacion_4 = Var_Agua_No_Pot_4,Variacion_10 = Var_Agua_No_Pot_10) %>% 
+  flextable() %>% 
+  set_table_properties(width = 0.8)
+
+ft_9
+```
+
+## Tabla sobre Consumo de Agua de los Habitantes
+
+```{r}
+ft_10 = Agua_España_2020 %>% 
+  select(Comunidad,Consumo_Habitante,Variacion_Consumo_Habitante_2,Variacion_Consumo_Habitante_4,Variacion_Consumo_Habitante_10) %>%
+  rename(Variacion_2 = Variacion_Consumo_Habitante_2,Variacion_4 = Variacion_Consumo_Habitante_4,Variacion_10 = Variacion_Consumo_Habitante_10) %>% 
+  flextable() %>% 
+  set_table_properties(width = 0.9)
+
+ft_10
+```
+
+## Tabla sobre Suministro de Agua en los diferentes Grupos de Usuarios
+
+```{r}
+ft_11 = Agua_España_2020 %>% 
+  group_by(Comunidad) %>% 
+  mutate(Porcentaje_Hogares = round(Hogares / 2290800 * 100,2),
+         Porcentaje_Sectores_económicos = round(`Sectores económicos` / 616365 * 100,2),
+         Porcentaje_Consumos_municipales = round(`Consumos municipales` / 270650 * 100,2)) %>% 
+  ungroup() %>% 
+  select(Comunidad,Hogares,Porcentaje_Hogares,`Sectores económicos`,Porcentaje_Sectores_económicos,`Consumos municipales`,Porcentaje_Consumos_municipales) %>%
+  flextable() %>% 
+  set_table_properties(width = 0.9)
+
+ft_11
+```
+
+## Tabla sobre Suministro de Agua en los diferentes Grupos de Usuarios
+
+```{r}
+ft_12 = Agua_España_2020 %>% 
+  group_by(Comunidad) %>% 
+  mutate(Porcentaje_Hogares = round(Hogares / `Volumen de agua registrada y distribuida` * 100,2),
+         Porcentaje_Sectores_económicos = round(`Sectores económicos` / `Volumen de agua registrada y distribuida` * 100,2),
+         Porcentaje_Consumos_municipales = round(`Consumos municipales` / `Volumen de agua registrada y distribuida` * 100,2)) %>% 
+  ungroup() %>% 
+  select(Comunidad,Hogares,Porcentaje_Hogares,`Sectores económicos`,Porcentaje_Sectores_económicos,`Consumos municipales`,Porcentaje_Consumos_municipales) %>%
+  flextable() %>% 
+  set_table_properties(width = 0.9)
+
+ft_12
+```
+
+## Tabla sobre Suministro de Agua en los diferentes Grupos de Usuarios
+
+```{r}
+ft_13 = Agua_España %>% 
+  filter(Comunidad == "Total Nacional" & Año > 2000) %>% 
+  group_by(Año) %>% 
+  mutate(Porcentaje_Hogares = round(Hogares / `Volumen de agua registrada y distribuida` * 100,2),
+         Porcentaje_Sectores_económicos = round(`Sectores económicos` / `Volumen de agua registrada y distribuida` * 100,2),
+         Porcentaje_Consumos_municipales = round(`Consumos municipales` / `Volumen de agua registrada y distribuida` * 100,2)) %>% 
+  ungroup() %>% 
+  select(Año,Hogares,Porcentaje_Hogares,`Sectores económicos`,Porcentaje_Sectores_económicos,`Consumos municipales`,Porcentaje_Consumos_municipales) %>%
+  flextable() %>% 
+  set_table_properties(width = 0.9)
+
+ft_13
+```
+
+## Guardamos todas las tablas
+
+```{r}
+doc <- read_docx()
+
+ancho_tabla = 476.2202
+
+# Inserta la tabla en el documento
+doc <- doc %>%
+  body_add_flextable(value = ft_1)%>%
+        body_add_break()# Salto de página
+
+# Inserta la tabla en el documento
+doc <- doc %>%
+  body_add_flextable(value = ft_2)%>%
+        body_add_break()# Salto de página
+
+# Inserta la tabla en el documento
+doc <- doc %>%
+  body_add_flextable(value = ft_3)%>%
+        body_add_break()# Salto de página
+  
+# Inserta la tabla en el documento
+doc <- doc %>%
+  body_add_flextable(value = ft_4)%>%
+        body_add_break()# Salto de página
+  
+# Inserta la tabla en el documento
+doc <- doc %>%
+  body_add_flextable(value = ft_5)%>%
+        body_add_break()# Salto de página
+  
+# Inserta la tabla en el documento
+doc <- doc %>%
+  body_add_flextable(value = ft_6)%>%
+        body_add_break()# Salto de página
+  
+# Inserta la tabla en el documento
+doc <- doc %>%
+  body_add_flextable(value = ft_7)%>%
+        body_add_break()# Salto de página
+
+# Inserta la tabla en el documento
+doc <- doc %>%
+  body_add_flextable(value = ft_8)%>%
+        body_add_break()# Salto de página
+  
+# Inserta la tabla en el documento
+doc <- doc %>%
+  body_add_flextable(value = ft_9)%>%
+        body_add_break()# Salto de página
+
+# Inserta la tabla en el documento
+doc <- doc %>%
+  body_add_flextable(value = ft_10)%>%
+        body_add_break()# Salto de página
+
+# Inserta la tabla en el documento
+doc <- doc %>%
+  body_add_flextable(value = ft_11)
+
+print(doc, target = "Tablas.docx")
+```
